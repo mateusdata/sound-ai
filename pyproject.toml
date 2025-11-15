@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "moviepy>=2.2.1",
     "pandas>=2.3.3",
     "pytubefix>=10.3.3",
     "requests>=2.32.5",
