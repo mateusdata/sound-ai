@@ -9,7 +9,7 @@ music_name = "ninguemexplicadeus"
 mp3_path = Path("src") / f"{music_name}.mp3"
 
 # --- 1. Baixar música do YouTube ---
-video = "https://www.youtube.com/watch?v=LYsaKn8FRhc&list=PL_Q15fKxrBb4pxTp2zQm6zZU3-h4dlm05"
+video = "https://www.youtube.com/watch?v=YnrN0o0lubM&list=PL_Q15fKxrBb4pxTp2zQm6zZU3-h4dlm05&index=3"
 url = urllib.parse.quote(video, "")
 clip = f"https://www.clipto.com/api/youtube/mp3?url={url}&csrfToken=8crUK66l-IsnUGoga9wzUzPRRfb4Inx9MEIw"
 
