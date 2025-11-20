@@ -5,11 +5,11 @@ import requests, urllib.parse
 from tqdm import tqdm
 
 # --- nome da música (sem .mp3) ---
-music_name = "ninguemexplicadeus"
+music_name = "jo"
 mp3_path = Path("src") / f"{music_name}.mp3"
 
 # --- 1. Baixar música do YouTube ---
-video = "https://www.youtube.com/watch?v=YnrN0o0lubM&list=PL_Q15fKxrBb4pxTp2zQm6zZU3-h4dlm05&index=3"
+video = "https://www.youtube.com/watch?v=X3tK1cpP7YU&list=PL_Q15fKxrBb4pxTp2zQm6zZU3-h4dlm05&index=4"
 url = urllib.parse.quote(video, "")
 clip = f"https://www.clipto.com/api/youtube/mp3?url={url}&csrfToken=8crUK66l-IsnUGoga9wzUzPRRfb4Inx9MEIw"
 
