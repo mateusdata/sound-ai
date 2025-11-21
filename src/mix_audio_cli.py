@@ -18,20 +18,20 @@ def mix_audio_files(input_files, output_file):
         input_files: Lista de caminhos dos arquivos de entrada
         output_file: Caminho do arquivo de saída
     """
-    # Verifica se os arquivos existem
+   
     for file in input_files:
         if not os.path.exists(file):
             print(f"❌ Erro: Arquivo não encontrado: {file}")
             return False
     
-    # Monta o comando FFmpeg
-    cmd = ["ffmpeg", "-y"]  # -y para sobrescrever sem perguntar
+   
+    cmd = ["ffmpeg", "-y"] 
     
-    # Adiciona os arquivos de entrada
+   
     for file in input_files:
         cmd.extend(["-i", file])
     
-    # Adiciona o filtro de mixagem
+   
     num_inputs = len(input_files)
     cmd.extend([
         "-filter_complex",
@@ -44,7 +44,7 @@ def mix_audio_files(input_files, output_file):
     print(f"   Saída: {Path(output_file).name}")
     
     try:
-        # Executa o comando
+       
         result = subprocess.run(
             cmd,
             capture_output=True,
@@ -72,10 +72,10 @@ def main():
         print("  python mix_stems.py drums.wav bass.wav other.wav -o instrumental.wav")
         sys.exit(1)
     
-    # Separa argumentos
+   
     args = sys.argv[1:]
     
-    # Procura o argumento -o
+   
     if "-o" in args:
         o_index = args.index("-o")
         input_files = args[:o_index]
@@ -85,21 +85,21 @@ def main():
             print("❌ Erro: Especifique o arquivo de saída após -o")
             sys.exit(1)
     else:
-        # Se não especificar -o, usa os 2 primeiros como entrada e último como saída
+       
         input_files = args[:-1]
         output_file = args[-1]
     
-    # Verifica se temos pelo menos 2 arquivos para mixar
+   
     if len(input_files) < 2:
         print("❌ Erro: É necessário pelo menos 2 arquivos para mixar")
         sys.exit(1)
     
-    # Garante que o diretório de saída existe
+   
     output_dir = os.path.dirname(output_file)
     if output_dir and not os.path.exists(output_dir):
         os.makedirs(output_dir, exist_ok=True)
     
-    # Mixa os arquivos
+   
     success = mix_audio_files(input_files, output_file)
     
     sys.exit(0 if success else 1)

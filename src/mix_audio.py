@@ -1,14 +1,14 @@
-#!/usr/bin/env python3
+
 import subprocess
 from pathlib import Path
 import requests, urllib.parse
 from tqdm import tqdm
 
-# --- nome da música (sem .mp3) ---
+
 music_name = "jo"
 mp3_path = Path("src") / f"{music_name}.mp3"
 
-# --- 1. Baixar música do YouTube ---
+
 video = "https://www.youtube.com/watch?v=X3tK1cpP7YU&list=PL_Q15fKxrBb4pxTp2zQm6zZU3-h4dlm05&index=4"
 url = urllib.parse.quote(video, "")
 clip = f"https://www.clipto.com/api/youtube/mp3?url={url}&csrfToken=8crUK66l-IsnUGoga9wzUzPRRfb4Inx9MEIw"
@@ -21,11 +21,11 @@ with open(mp3_path, "wb") as f:
     for chunk in tqdm(r.iter_content(1024), total=total//1024, unit="KB"):
         f.write(chunk)
 
-# --- 2. Rodar Demucs ---
+
 print(f"🎧 1. Rodando Demucs em: {mp3_path}")
 subprocess.run(["demucs", str(mp3_path)])
 
-# --- 3. Localizar pasta de saída ---
+
 separated_root = Path("separated")
 found_dir = None
 
@@ -50,7 +50,7 @@ if not drums.exists() or not bass.exists():
     print(f"❌ Arquivos separados não encontrados em: {found_dir}")
     exit(1)
 
-# --- 4. Mixagem ---
+
 subprocess.run([
     "ffmpeg", "-y",
     "-i", str(drums),

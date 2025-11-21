@@ -20,21 +20,21 @@ DEMUCS_OUTPUT_DIR = SEPARATED_DIR / "htdemucs"
 SRC_DIR.mkdir(exist_ok=True)
 
 def download_audio(url_youtube, progress_bar):
-    """Baixa o áudio usando a API fornecida."""
+   
     try:
-        # Usamos um nome fixo para facilitar a lógica do Demucs depois
-        # O Demucs cria uma pasta com o nome do arquivo
+       
+       
         filename = "temp_audio" 
         output_path = SRC_DIR / f"{filename}.mp3"
         
         encoded_url = urllib.parse.quote(url_youtube, "")
-        # Nota: O token CSRF pode expirar. Se parar de funcionar, atualize aqui.
+       
         api_url = f"https://www.clipto.com/api/youtube/mp3?url={encoded_url}&csrfToken=8crUK66l-IsnUGoga9wzUzPRRfb4Inx9MEIw"
         
         r = requests.get(api_url, stream=True)
         total_size = int(r.headers.get("content-length", 0))
         
-        # Se o arquivo for muito pequeno (< 10KB), a API provavelmente falhou
+       
         if total_size < 10000 and total_size > 0:
              st.error("Erro no download: A API retornou um arquivo inválido. O link pode ser inválido ou o token expirou.")
              return None
@@ -53,12 +53,12 @@ def download_audio(url_youtube, progress_bar):
         return None
 
 def run_demucs(input_path):
-    """Roda o Demucs no arquivo baixado."""
+   
     try:
-        # O comando run do subprocess espera o caminho como string
+       
         cmd = ["demucs", str(input_path)]
         
-        # Rodamos o processo
+       
         result = subprocess.run(cmd, capture_output=True, text=True)
         
         if result.returncode != 0:
@@ -71,8 +71,8 @@ def run_demucs(input_path):
         return False
 
 def mix_tracks(song_folder_name):
-    """Mistura Bateria e Baixo."""
-    # O caminho onde o Demucs salvou (separated/htdemucs/temp_audio)
+   
+   
     track_dir = DEMUCS_OUTPUT_DIR / song_folder_name
     
     drums = track_dir / "drums.wav"
@@ -109,10 +109,10 @@ if st.button("🚀 Processar Áudio", type="primary"):
     if not youtube_url:
         st.warning("Por favor, insira uma URL.")
     else:
-        # Usamos st.status para mostrar o progresso passo a passo
+       
         with st.status("Iniciando processamento...", expanded=True) as status:
             
-            # 1. DOWNLOAD
+           
             st.write("⬇️ Baixando áudio do YouTube...")
             progress_bar = st.progress(0)
             mp3_path = download_audio(youtube_url, progress_bar)
@@ -120,10 +120,10 @@ if st.button("🚀 Processar Áudio", type="primary"):
             if mp3_path:
                 st.write("✅ Download concluído!")
                 
-                # 2. DEMUCS
+               
                 st.write("🧠 A IA (Demucs) está separando as faixas... (Isso pode demorar)")
-                # Removemos a pasta antiga se existir para garantir limpeza
-                song_name = mp3_path.stem # "temp_audio"
+               
+                song_name = mp3_path.stem
                 potential_old_folder = DEMUCS_OUTPUT_DIR / song_name
                 if potential_old_folder.exists():
                     shutil.rmtree(potential_old_folder)
@@ -133,7 +133,7 @@ if st.button("🚀 Processar Áudio", type="primary"):
                 if success:
                     st.write("✅ Separação concluída!")
                     
-                    # 3. MIXAGEM
+                   
                     st.write("🎛️ Mixando Bateria + Baixo...")
                     final_file = mix_tracks(song_name)
                     
@@ -142,10 +142,10 @@ if st.button("🚀 Processar Áudio", type="primary"):
                         
                         st.success("Tudo pronto! Ouça ou baixe abaixo.")
                         
-                        # Player de áudio
+                       
                         st.audio(str(final_file), format="audio/wav")
                         
-                        # Botão de Download
+                       
                         with open(final_file, "rb") as file:
                             st.download_button(
                                 label="📥 Baixar Mix (WAV)",
