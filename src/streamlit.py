@@ -97,7 +97,7 @@ def process_demucs(mp3_path, music_name):
 # --- INTERFACE (SIDEBAR) ---
 
 with st.sidebar:
-    st.header("🎛️ Novo Processamento")
+    st.header("Mateus sonoro 🎧")
     
     input_url = st.text_input("🔗 Link do YouTube", placeholder="https://youtube.com/...")
     input_name = st.text_input("📝 Nome da Música (sem espaços preferencialmente)", placeholder="Ex: Coldplay_Yellow")
