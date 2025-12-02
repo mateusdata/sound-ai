@@ -1,0 +1,20 @@
+services:
+  app:
+    build: .
+    container_name: sound-ai
+    ports:
+      - "8501:8501"
+    volumes:          
+      - .:/app     
+      - /app/.venv
+    environment:
+      - PYTHONUNBUFFERED=1     
+      - NVIDIA_VISIBLE_DEVICES=all
+    deploy: # Enable GPU support
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia 
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
